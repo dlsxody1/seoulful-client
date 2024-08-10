@@ -28,7 +28,7 @@ export const getSearchResult = async (
   guSeq?: number
 ): Promise<HomeEventResponseType> => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}event/list?limit=${limit}&offset=${offset}&eventName=${eventName}${categorySeq ? `&categorySeq=${categorySeq}` : ''}${startDate ? `&startDate=${startDate}` : ''}${endDate ? `&endDate=${endDate}` : ''}${guSeq ? `&guSeq=${guSeq}` : ''}`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}event/list/search?limit=${limit}&offset=${offset}&eventName=${eventName}${categorySeq ? `&categorySeq=${categorySeq}` : ''}${startDate ? `&startDate=${startDate}` : ''}${endDate ? `&endDate=${endDate}` : ''}${guSeq ? `&guSeq=${guSeq}` : ''}`
   );
 
   const data = await res.json();
