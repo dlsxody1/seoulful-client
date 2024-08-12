@@ -1,5 +1,22 @@
 import { MutableRefObject } from 'react';
 
+export interface HomeQueryType {
+  limit: number;
+  offset: number;
+  isRandom: boolean;
+  categorySeq?: number;
+}
+
+export interface SearchQueryType {
+  limit: number;
+  offset: number;
+  eventName: string | null;
+  categorySeq: string | null;
+  startDate: string | null;
+  endDate: string | null;
+  guSeq: string | null;
+}
+
 export interface HomeEventType {
   eventId: number;
   categorySeq: number;

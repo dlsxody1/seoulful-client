@@ -9,8 +9,6 @@ export const BookmarkButton = ({
   buttonSize,
   iconSize,
   hasBorder,
-  // isClicked,
-  // setIsClicked,
 }: BookmarkButtonPropsType) => {
   const [isClicked, setIsClicked] = useState(false);
 
