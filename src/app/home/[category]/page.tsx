@@ -27,12 +27,12 @@ const CategoryPage = () => {
 
   const fetchData = async (offset: number) => {
     setIsLoading(true);
-    const { data, totalCount: count } = await getHomeEvent(
-      10,
+    const { data, totalCount: count } = await getHomeEvent({
+      limit: 10,
       offset,
-      false,
-      categorySeq
-    );
+      isRandom: false,
+      categorySeq,
+    });
     if (data.length < 10) {
       setHasMoreData(false);
     }

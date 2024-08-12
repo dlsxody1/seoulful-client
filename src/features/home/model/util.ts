@@ -1,6 +1,6 @@
 import * as qs from 'qs';
 import { formatDate, getCategorySeqByName, getGuSeqByName } from '@/shared';
-import { SearchQueryType } from './types';
+import type { HomeQueryType, SearchQueryType } from './types';
 
 export const makeSearchQuery = ({
   eventName,
@@ -21,5 +21,20 @@ export const makeSearchQuery = ({
 
   const obj = qs.stringify(params);
 
+  return obj;
+};
+
+export const makeHomeQuery = ({
+  limit,
+  offset,
+  categorySeq,
+}: HomeQueryType) => {
+  const params: Partial<HomeQueryType> = {
+    ...(limit !== undefined && { limit }),
+    ...(offset !== undefined && { offset }),
+    ...(categorySeq && { categorySeq }),
+  };
+
+  const obj = qs.stringify(params);
   return obj;
 };
