@@ -9,8 +9,6 @@ export const EventBookmarkButton = ({
   buttonSize,
   iconSize,
   hasBorder,
-  // isClicked,
-  // setIsClicked,
 }: EventBookmarkButtonPropsType) => {
   const [isClicked, setIsClicked] = useState(false);
 

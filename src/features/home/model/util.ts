@@ -12,13 +12,14 @@ export const makeSearchQuery = ({
   const params: Partial<SearchQueryType> = {
     ...(eventName && { eventName }),
     ...(categorySeq && {
-      categorySeq: getCategorySeqByName(categorySeq).toString(),
+      categorySeq: getCategorySeqByName(categorySeq)?.toString(),
     }),
     ...(startDate && { startDate: formatDate(startDate) }),
     ...(endDate && { endDate: formatDate(endDate) }),
-    ...(guSeq && { guSeq: getGuSeqByName(guSeq).toString() }),
+    ...(guSeq && { guSeq: getGuSeqByName(guSeq)?.toString() }),
   };
 
   const obj = qs.stringify(params);
+
   return obj;
 };
