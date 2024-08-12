@@ -9,24 +9,15 @@ export const makeSearchQuery = ({
   endDate,
   guSeq,
 }: SearchQueryType) => {
-  const params: Partial<SearchQueryType> = {};
-
-  if (eventName) {
-    params.eventName = eventName;
-  }
-
-  if (categorySeq) {
-    params.categorySeq = getCategorySeqByName(categorySeq).toString();
-  }
-  if (startDate) {
-    params.startDate = formatDate(startDate);
-  }
-  if (endDate) {
-    params.endDate = formatDate(endDate);
-  }
-  if (guSeq) {
-    params.guSeq = getGuSeqByName(guSeq).toString();
-  }
+  const params: Partial<SearchQueryType> = {
+    ...(eventName && { eventName }),
+    ...(categorySeq && {
+      categorySeq: getCategorySeqByName(categorySeq).toString(),
+    }),
+    ...(startDate && { startDate: formatDate(startDate) }),
+    ...(endDate && { endDate: formatDate(endDate) }),
+    ...(guSeq && { guSeq: getGuSeqByName(guSeq).toString() }),
+  };
 
   const obj = qs.stringify(params);
   return obj;

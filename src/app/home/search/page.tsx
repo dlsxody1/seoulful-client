@@ -43,8 +43,8 @@ const AdvancedSearch = () => {
             onSubmit({
               eventName,
               categorySeq,
-              startDate: dateRange[0],
-              endDate: dateRange[1],
+              startDate: dateRange?.[0],
+              endDate: dateRange?.[1],
               guSeq,
             });
           }
