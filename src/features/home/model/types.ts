@@ -8,8 +8,8 @@ export interface HomeQueryType {
 }
 
 export interface SearchQueryType {
-  limit?: number;
-  offset?: number;
+  limit: number;
+  offset: number;
   eventName: string | null;
   categorySeq: string | null;
   startDate: string | null;

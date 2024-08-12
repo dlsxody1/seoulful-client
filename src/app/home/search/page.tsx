@@ -24,7 +24,7 @@ const AdvancedSearch = () => {
     startDate,
     endDate,
     guSeq,
-  }: SearchQueryType) => {
+  }: Omit<SearchQueryType, 'limit' | 'offset'>) => {
     const query = makeSearchQuery({
       eventName,
       categorySeq,
