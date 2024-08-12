@@ -1,7 +1,10 @@
 'use client';
+import type { BookmarkEvent } from '@/entities/bookmark';
 import { Header, ThumbnailItem } from '@/shared';
+import { useState } from 'react';
 
 const BookmarkPage = () => {
+  const [bookmarkData, setBookmarkData] = useState<BookmarkEvent[]>();
   return (
     <div>
       <Header title={'북마크'} isBackButton />
