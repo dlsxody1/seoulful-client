@@ -10,13 +10,13 @@ import {
 import { LoadingComponent, NavigationButton } from '@/shared';
 import { getHomeEvent } from '@/entities/home';
 import { getEventDetail } from '@/entities/event';
-import type { EventDetailResponse } from '@/features/event/model/types';
+import type { EventDetail } from '@/features/event/model/types';
 
 export default function Home() {
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [recommendData, setRecommendData] = useState<
-    EventDetailResponse[] | null
-  >(null);
+  const [recommendData, setRecommendData] = useState<EventDetail[] | null>(
+    null
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,16 +47,14 @@ export default function Home() {
           transition={{ duration: 0.3 }}
           className="absolute w-full h-full"
         >
-          <FullpageBackground
-            imageUrl={recommendData[currentIdx]?.data.mainImg}
-          />
+          <FullpageBackground imageUrl={recommendData[currentIdx]?.mainImg} />
         </motion.div>
       </AnimatePresence>
       <div className="relative flex flex-col justify-between p-[30px] w-full h-full z-[1000]">
         <FullpageHeader />
         <div>
           <AnimatePresence initial={false} mode="wait">
-            <FullpageContents data={recommendData[currentIdx]?.data} />
+            <FullpageContents data={recommendData[currentIdx]} />
           </AnimatePresence>
           <div className="flex gap-x-[12px]">
             <NavigationButton

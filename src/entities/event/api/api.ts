@@ -1,13 +1,14 @@
-import { EventDetailResponse } from '@/features/event/model/types';
+import type {
+  EventDetail,
+  EventDetailResponse,
+} from '@/features/event/model/types';
 
-export const getEventDetail = async (
-  eventId: number
-): Promise<EventDetailResponse> => {
+export const getEventDetail = async (eventId: number): Promise<EventDetail> => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}event/detail/${eventId}`
   );
-  const data = response.json();
+
+  const { data }: EventDetailResponse = await response.json();
+
   return data;
 };
-
-export const getEventList = async () => {};
