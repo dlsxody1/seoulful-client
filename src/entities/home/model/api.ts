@@ -1,11 +1,18 @@
-import type { HomeEventResponseType } from '@/features/home/model/types';
+import type {
+  HomeEventResponseType,
+  LimitOffsetType,
+  SearchQueryType,
+} from '@/features/home';
 
-export const getHomeEvent = async (
-  limit: number,
-  offset: number,
-  isRandom: boolean,
-  categorySeq?: number
-): Promise<HomeEventResponseType> => {
+export const getHomeEvent = async ({
+  limit,
+  offset,
+  isRandom,
+  categorySeq,
+}: LimitOffsetType & {
+  isRandom: boolean;
+  categorySeq?: number;
+}): Promise<HomeEventResponseType> => {
   const randomNum = Math.floor(Math.random() * 15) + 1;
 
   const res = await fetch(
@@ -18,15 +25,15 @@ export const getHomeEvent = async (
   return data;
 };
 
-export const getSearchResult = async (
-  limit: number,
-  offset: number,
-  eventName: string,
-  startDate?: string,
-  endDate?: string,
-  categorySeq?: number,
-  guSeq?: number
-): Promise<HomeEventResponseType> => {
+export const getSearchResult = async ({
+  limit,
+  offset,
+  eventName,
+  startDate,
+  endDate,
+  categorySeq,
+  guSeq,
+}: SearchQueryType & LimitOffsetType): Promise<HomeEventResponseType> => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}event/list/search?limit=${limit}&offset=${offset}&eventName=${eventName}${categorySeq ? `&categorySeq=${categorySeq}` : ''}${startDate ? `&startDate=${startDate}` : ''}${endDate ? `&endDate=${endDate}` : ''}${guSeq ? `&guSeq=${guSeq}` : ''}`
   );

@@ -6,8 +6,17 @@ import { SearchInput } from '@/shared';
 import Link from 'next/link';
 
 const HomePage = async () => {
-  const { data: recommendData } = await getHomeEvent(2, 0, true);
-  const { data: musicalData } = await getHomeEvent(2, 0, false, 5);
+  const { data: recommendData } = await getHomeEvent({
+    limit: 7,
+    offset: 0,
+    isRandom: true,
+  });
+  const { data: musicalData } = await getHomeEvent({
+    limit: 7,
+    offset: 0,
+    isRandom: false,
+    categorySeq: 5,
+  });
 
   return (
     <div className="relative flex flex-col gap-y-[20px] p-[30px] overflow-y-scroll">

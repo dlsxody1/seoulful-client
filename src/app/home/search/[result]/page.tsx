@@ -15,23 +15,26 @@ const CategoryPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const bottom = useRef<HTMLDivElement>(null);
 
+  // 쿼리 유실되는 경우에 대한 방어
+  // search로 검색했을 때에 대한 방어. api response에 대한 처리.
+
   const eventName = useSearchParams().get('eventName') || '';
-  const startDate = useSearchParams().get('startDate') || undefined;
-  const endDate = useSearchParams().get('endDate') || undefined;
-  const categorySeq = Number(useSearchParams().get('categorySeq'));
-  const guSeq = Number(useSearchParams().get('guSeq'));
+  const startDate = useSearchParams().get('startDate');
+  const endDate = useSearchParams().get('endDate');
+  const categorySeq = useSearchParams().get('categorySeq');
+  const guSeq = useSearchParams().get('guSeq');
 
   const fetchData = async (offset: number) => {
     setIsLoading(true);
-    const { data, totalCount: count } = await getSearchResult(
-      10,
+    const { data, totalCount: count } = await getSearchResult({
+      limit: 10,
       offset,
       eventName,
       startDate,
       endDate,
       categorySeq,
-      guSeq
-    );
+      guSeq,
+    });
     if (data.length < 10) {
       setHasMoreData(false);
     }

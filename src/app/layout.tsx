@@ -49,6 +49,7 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   title: 'Seoulful',
   description: 'Blah Blah',
+  icons: '/assets/seoulful-favicon.svg',
 };
 
 export default function RootLayout({
@@ -59,6 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${pretendard.variable}`}>
       <head>
+        <link rel="icon" href="/assets/seoulful-favicon.svg" />
         <Script
           type="text/javascript"
           src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || process.env.NAVER_MAP_CLIENT_ID}&callback=initMap`}

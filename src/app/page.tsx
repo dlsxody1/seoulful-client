@@ -20,7 +20,11 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await getHomeEvent(5, 0, true);
+      const { data } = await getHomeEvent({
+        limit: 5,
+        offset: 0,
+        isRandom: true,
+      });
       const detailPromises = data.map((event) => getEventDetail(event.eventId));
       const detailData = await Promise.all(detailPromises);
       setRecommendData(detailData);

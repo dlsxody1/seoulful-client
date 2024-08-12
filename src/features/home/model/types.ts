@@ -1,5 +1,18 @@
 import { MutableRefObject } from 'react';
 
+export interface LimitOffsetType {
+  limit: number;
+  offset: number;
+}
+
+export interface SearchQueryType {
+  eventName: string;
+  categorySeq: string | null;
+  startDate: string | null;
+  endDate: string | null;
+  guSeq: string | null;
+}
+
 export interface HomeEventType {
   eventId: number;
   categorySeq: number;

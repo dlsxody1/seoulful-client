@@ -8,11 +8,10 @@ import {
   SearchInput,
   GuName,
   Selectbox,
-  getCategorySeqByName,
-  getGuSeqByName,
-  formatDate,
 } from '@/shared';
 import { useRouter } from 'next/navigation';
+import { makeSearchQuery } from '@/features/home/model/util';
+import { SearchQueryType } from '@/features/home';
 
 const AdvancedSearch = () => {
   const { register, handleSubmit, control } = useForm();
@@ -22,45 +21,33 @@ const AdvancedSearch = () => {
   const onSubmit = ({
     eventName,
     categorySeq,
-    dateRange,
+    startDate,
+    endDate,
     guSeq,
-  }: {
-    eventName: string;
-    categorySeq?: string;
-    dateRange?: [string | null, string | null];
-    guSeq: string;
-  }) => {
-    const params = new URLSearchParams();
-
-    // eventName은 필수
-    if (eventName) {
-      params.append('eventName', eventName);
-    }
-
-    // 선택사항들
-    if (categorySeq) {
-      params.append(
-        'categorySeq',
-        getCategorySeqByName(categorySeq).toString()
-      );
-    }
-    if (dateRange?.[0]) {
-      params.append('startDate', formatDate(dateRange?.[0]));
-    }
-    if (dateRange?.[1]) {
-      params.append('endDate', formatDate(dateRange?.[1]));
-    }
-    if (guSeq) {
-      params.append('guSeq', getGuSeqByName(guSeq).toString());
-    }
-    router.push(`/home/search/result?${params.toString()}`);
+  }: SearchQueryType) => {
+    const query = makeSearchQuery({
+      eventName,
+      categorySeq,
+      startDate,
+      endDate,
+      guSeq,
+    });
+    router.push(`/home/search/result?${query}`);
   };
   return (
     <div>
       <Header isBackButton title="상세 검색" />
       <form
-        onSubmit={handleSubmit(({ eventName, categorySeq, dateRange, guSeq }) =>
-          onSubmit({ eventName, categorySeq, dateRange, guSeq })
+        onSubmit={handleSubmit(
+          ({ eventName, categorySeq, dateRange, guSeq }) => {
+            onSubmit({
+              eventName,
+              categorySeq,
+              startDate: dateRange[0],
+              endDate: dateRange[1],
+              guSeq,
+            });
+          }
         )}
         className="flex flex-col px-[30px] pt-[20px] divide-y divide-black-DDD"
       >
