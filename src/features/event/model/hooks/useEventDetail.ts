@@ -12,9 +12,12 @@ export const useEventDetail = () => {
   const params = useParams();
   const eventId = params.id;
   useEffect(() => {
-    getEventDetail(Number(eventId)).then((data) => {
-      setEventDetailData(data.data);
-    });
+    const fetchData = async () => {
+      const detailData = await getEventDetail(Number(eventId));
+      setEventDetailData(detailData);
+    };
+
+    fetchData();
   }, []);
 
   return { eventDetailData };
