@@ -40,3 +40,31 @@ export const fetchUserData = async (
   const data = await response.json();
   return data.data;
 };
+
+export const validateToken = async (accessToken: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}auth/token/validate`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  return response;
+};
+
+export const reissueToken = async (refreshToken: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}auth/token/reissue`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${refreshToken}`,
+      },
+    }
+  );
+
+  return response;
+};
