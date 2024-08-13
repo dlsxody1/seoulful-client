@@ -1,12 +1,10 @@
 'use client';
 import { getBookmarkList, type BookmarkEvent } from '@/entities/bookmark';
-import { useLoginCheck } from '@/features/auth';
 import { Header, ThumbnailItem } from '@/shared';
 import { useEffect, useState } from 'react';
 
 const BookmarkPage = () => {
-  const [bookmarkData, setBookmarkData] = useState<BookmarkEvent[]>();
-  useLoginCheck();
+  const [bookmarkData, setBookmarkData] = useState<BookmarkEvent[]>([]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -28,9 +26,13 @@ const BookmarkPage = () => {
       <Header title={'북마크'} isBackButton />
       <div className="px-[30px] pt-[20px]">
         <ul className="flex flex-wrap gap-[15px]">
-          {bookmarkData?.map((data, i) => (
-            <ThumbnailItem key={`data-${i}`} data={data} />
-          ))}
+          {bookmarkData.length === 0 ? (
+            <div>북마크한 데이터가 없습니다.</div>
+          ) : (
+            bookmarkData?.map((data, i) => (
+              <ThumbnailItem key={`data-${i}`} data={data} />
+            ))
+          )}
         </ul>
       </div>
     </div>
