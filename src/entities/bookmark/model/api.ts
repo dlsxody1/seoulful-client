@@ -1,5 +1,5 @@
 import type {
-  BookmarkAddedResponse,
+  BookmarkChangeResponse,
   BookmarkEvent,
   BookmarkEventResponse,
 } from './types';
@@ -40,7 +40,31 @@ export const addBookmark = async (
     }
   );
 
-  const { data }: BookmarkAddedResponse = await response.json();
+  const { data }: BookmarkChangeResponse = await response.json();
+
+  return data;
+};
+
+export const removeBookmark = async (
+  userId: string,
+  accessToken: string,
+  eventSeq: number
+) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}bookmark/${userId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        eventSeq: eventSeq,
+      }),
+      method: 'DELETE',
+    }
+  );
+
+  const { data }: BookmarkChangeResponse = await response.json();
 
   return data;
 };

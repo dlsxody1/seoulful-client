@@ -1,7 +1,7 @@
-export { getBookmarkList, addBookmark } from './model/api';
+export { getBookmarkList, addBookmark, removeBookmark } from './model/api';
 
 export type {
   BookmarkEvent,
   BookmarkEventResponse,
-  BookmarkAddedResponse,
+  BookmarkChangeResponse,
 } from './model/types';
