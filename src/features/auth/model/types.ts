@@ -9,8 +9,8 @@ export interface UserDTO {
   email: string | null;
   profileImg: string | null;
   bookmarkList: number[];
-  accessToken: string | null;
-  refreshToken: string | null;
+  accessToken: string;
+  refreshToken: string;
   createdAt: Date;
 }
 
@@ -26,4 +26,17 @@ export interface NaverPayload {
 export interface KakaoPayload {
   code: string;
   redirectUrl: string;
+}
+
+export interface ValidateTokenType {
+  statusCode: number;
+  message: string;
+  timestamp: number;
+}
+
+export interface ValidateTokenDTO {
+  userId: string;
+  accessToken: string;
+  refreshToken: string;
+  eventId: number;
 }

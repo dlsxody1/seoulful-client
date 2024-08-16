@@ -4,6 +4,7 @@ import {
   ProviderTypes,
   UserDTO,
 } from '@/features/auth';
+import type { UserResponseDTO } from '@/features/auth/model/types';
 
 export const loginUser = async ({ provider }: ProviderTypes) => {
   const isProduction = process.env.NODE_ENV === 'production';
@@ -41,21 +42,24 @@ export const fetchUserData = async (
   return data.data;
 };
 
-export const validateToken = async (accessToken: string) => {
+export const validateToken = async (accessToken: string): Promise<number> => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}auth/token/validate`,
     {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
     }
   );
 
-  return response;
+  const { status } = response;
+
+  return status;
 };
 
-export const reissueToken = async (refreshToken: string) => {
+export const reissueToken = async (refreshToken: string): Promise<UserDTO> => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}auth/token/reissue`,
     {
@@ -66,5 +70,8 @@ export const reissueToken = async (refreshToken: string) => {
     }
   );
 
-  return response;
+  console.log(response, 'reissue res  ponse');
+  const { data }: UserResponseDTO = await response.json();
+
+  return data;
 };

@@ -3,13 +3,13 @@ import type { BookmarkEvent, BookmarkEventResponse } from './types';
 
 export const getBookmarkList = async (
   userId: string,
-  token: string
+  accesToken: string
 ): Promise<BookmarkEvent[]> => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}bookmark/${userId}`,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accesToken}`,
       },
     }
   );
@@ -20,23 +20,24 @@ export const getBookmarkList = async (
 
 export const addBookmark = async (
   userId: string,
-  token: string,
+  accessToken: string,
   eventSeq: number
 ) => {
-  const bookmarkBody = JSON.stringify({
-    eventSeq,
-  });
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}bookmark/${userId}`,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
-      body: bookmarkBody,
+      body: JSON.stringify({
+        eventSeq: eventSeq,
+      }),
       method: 'PUT',
     }
   );
 
   const { data }: UserResponseDTO = await response.json();
+
   return data;
 };

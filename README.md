@@ -55,7 +55,7 @@ npm run dev
 
 ### 프레임워크
 
-![next](https://img.shields.io/badge/next-13.5.6-000000?logo=next.js) <br/>
+![next](https://img.shields.io/badge/next-14.2.3-000000?logo=next.js) <br/>
 다양한 렌더링 전략을 편리하게 사용할 수 있도록 지원하는 메타프레임워크 Next.js를 사용합니다.<br/>
 
 ### 정적 분석 <br/>

@@ -1,9 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import BookmarkIcon from '/public/assets/bookmark-icon.svg';
 import type { BookmarkButtonPropsType } from '../index';
+import { addBookmark } from '@/entities/bookmark';
+import type { UserDTO } from '@/features/auth';
+import { useAtom } from 'jotai';
+import { eventDetailAtom } from '@/features/event/model/store';
+import { tokenValidateCheck } from '../model/utils';
 
 export const BookmarkButton = ({
   buttonSize,
@@ -11,9 +16,39 @@ export const BookmarkButton = ({
   hasBorder,
 }: BookmarkButtonPropsType) => {
   const [isClicked, setIsClicked] = useState(false);
+  const [userData, setUserData] = useState<UserDTO>();
+  const [{ eventId }] = useAtom(eventDetailAtom);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const user = localStorage.getItem('user');
+    if (user) {
+      const userObject = JSON.parse(user);
+      setUserData(userObject);
+    }
+  }, []);
 
   const handleClick = () => {
-    setIsClicked((prev) => !prev);
+    if (userData) {
+      const { userId, accessToken: currentToken, refreshToken } = userData;
+      const fetched = async () => {
+        try {
+          const { accessToken } = await tokenValidateCheck({
+            userId,
+            accessToken: currentToken,
+            refreshToken,
+            eventId,
+          });
+          await addBookmark(userId, accessToken, eventId);
+          setIsClicked((prev) => !prev);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetched();
+    } else {
+      alert('Please log in!');
+    }
   };
 
   return (
