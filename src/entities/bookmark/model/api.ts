@@ -1,5 +1,8 @@
-import { UserResponseDTO } from '@/features/auth';
-import type { BookmarkEvent, BookmarkEventResponse } from './types';
+import type {
+  BookmarkAddedResponse,
+  BookmarkEvent,
+  BookmarkEventResponse,
+} from './types';
 
 export const getBookmarkList = async (
   userId: string,
@@ -37,7 +40,7 @@ export const addBookmark = async (
     }
   );
 
-  const { data }: UserResponseDTO = await response.json();
+  const { data }: BookmarkAddedResponse = await response.json();
 
   return data;
 };

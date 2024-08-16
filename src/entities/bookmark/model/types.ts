@@ -13,3 +13,9 @@ export interface BookmarkEventResponse {
   data: BookmarkEvent[];
   totalCount: number;
 }
+
+export interface BookmarkAddedResponse {
+  data: {
+    bookmarkList: number[];
+  };
+}
