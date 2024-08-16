@@ -25,6 +25,7 @@ export {
   formatDate,
 } from './model/utils';
 export { useCheckAgent } from './model/hooks/useCheckAgent';
+export { useLocalStorage } from './model/hooks/useLocalStorage';
 
 export { Header } from './ui/Header';
 export { GNBItem } from './ui/GNBItem';
