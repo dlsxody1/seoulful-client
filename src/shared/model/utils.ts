@@ -98,6 +98,7 @@ export const tokenValidateCheck = async (validateData: ValidateTokenDTO) => {
     if (userString) {
       const reissueResult = await reissueToken(currentRefreshToken);
       if (typeof reissueResult === 'number') {
+        localStorage.removeItem('user');
         return reissueResult;
       } else {
         const userObject = JSON.parse(userString);

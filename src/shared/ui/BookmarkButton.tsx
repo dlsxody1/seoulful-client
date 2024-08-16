@@ -33,7 +33,7 @@ export const BookmarkButton = ({
 
   const handleClick = async () => {
     if (!userData) {
-      alert('Please log in!');
+      setShowModal(true);
       return;
     }
 
