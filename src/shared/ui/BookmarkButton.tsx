@@ -39,12 +39,23 @@ export const BookmarkButton = ({
             refreshToken,
             eventId,
           });
+
+          let updatedBookmarkList = [...(userData.bookmarkList || [])];
           if (!isClicked) {
             await addBookmark(userId, accessToken, eventId);
+            updatedBookmarkList.push(eventId);
           } else {
             await removeBookmark(userId, accessToken, eventId);
+            updatedBookmarkList = updatedBookmarkList.filter(
+              (id) => id !== eventId
+            );
           }
-
+          const updatedUserData = {
+            ...userData,
+            bookmarkList: updatedBookmarkList,
+          };
+          setUserData(updatedUserData);
+          localStorage.setItem('user', JSON.stringify(updatedUserData));
           setIsClicked((prev) => !prev);
         } catch (err) {
           console.error(err);
