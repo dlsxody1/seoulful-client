@@ -1,6 +1,8 @@
 import { CategoryName, CategorySeq, CategoryUrl } from '@/features/Category';
 import { GuName, GuSeq } from './constants';
 import dayjs from 'dayjs';
+import type { ValidateTokenDTO } from '@/features/auth/model/types';
+import { reissueToken, validateToken } from '@/entities/auth/api/api';
 
 export const formatDate = (inputString: string) => {
   const parsedDate = dayjs(inputString);
@@ -83,4 +85,32 @@ export const filterParams = <T extends Record<string, unknown>>(
     },
     {} as Record<string, string>
   );
+};
+
+export const tokenValidateCheck = async (validateData: ValidateTokenDTO) => {
+  const { accessToken: currentAccessToken, refreshToken: currentRefreshToken } =
+    validateData;
+
+  const validationResponse = await validateToken(currentAccessToken);
+
+  if (validationResponse === 401) {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const reissueResult = await reissueToken(currentRefreshToken);
+      if (typeof reissueResult === 'number') {
+        localStorage.removeItem('user');
+        return reissueResult;
+      } else {
+        const userObject = JSON.parse(userString);
+        userObject.accessToken = reissueResult.accessToken;
+        userObject.refreshToken = reissueResult.refreshToken;
+        localStorage.setItem('user', JSON.stringify(userObject));
+
+        return {
+          accessToken: reissueResult.accessToken,
+        };
+      }
+    }
+  }
+  return { accessToken: currentAccessToken };
 };
