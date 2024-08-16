@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import BookmarkIcon from '/public/assets/bookmark-icon.svg';
 import type { BookmarkButtonPropsType } from '../index';
-import { addBookmark } from '@/entities/bookmark';
+import { addBookmark, removeBookmark } from '@/entities/bookmark';
 import type { UserDTO } from '@/features/auth';
 import { useAtom } from 'jotai';
 import { eventDetailAtom } from '@/features/event/model/store';
@@ -39,7 +39,12 @@ export const BookmarkButton = ({
             refreshToken,
             eventId,
           });
-          await addBookmark(userId, accessToken, eventId);
+          if (!isClicked) {
+            await addBookmark(userId, accessToken, eventId);
+          } else {
+            await removeBookmark(userId, accessToken, eventId);
+          }
+
           setIsClicked((prev) => !prev);
         } catch (err) {
           console.error(err);
