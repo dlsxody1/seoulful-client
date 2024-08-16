@@ -59,7 +59,9 @@ export const validateToken = async (accessToken: string): Promise<number> => {
   return status;
 };
 
-export const reissueToken = async (refreshToken: string): Promise<UserDTO> => {
+export const reissueToken = async (
+  refreshToken: string
+): Promise<UserDTO | number> => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}auth/token/reissue`,
     {
@@ -70,7 +72,10 @@ export const reissueToken = async (refreshToken: string): Promise<UserDTO> => {
     }
   );
 
-  console.log(response, 'reissue res  ponse');
+  if (response.status === 401) {
+    return response.status;
+  }
+
   const { data }: UserResponseDTO = await response.json();
 
   return data;

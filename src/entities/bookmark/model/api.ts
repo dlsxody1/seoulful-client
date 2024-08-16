@@ -41,7 +41,7 @@ export const addBookmark = async (
   );
 
   const { data }: BookmarkChangeResponse = await response.json();
-  console.log(data, 'add');
+
   return data;
 };
 
@@ -65,7 +65,5 @@ export const removeBookmark = async (
   );
 
   const { data }: BookmarkChangeResponse = await response.json();
-  console.log(data, 'remove');
-
   return data;
 };

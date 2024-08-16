@@ -96,14 +96,19 @@ export const tokenValidateCheck = async (validateData: ValidateTokenDTO) => {
   if (validationResponse === 401) {
     const userString = localStorage.getItem('user');
     if (userString) {
-      const { accessToken, refreshToken } =
-        await reissueToken(currentRefreshToken);
-      const userObject = JSON.parse(userString);
-      userObject.accessToken = accessToken;
-      userObject.refreshToken = refreshToken;
-      localStorage.setItem('user', JSON.stringify(userObject));
+      const reissueResult = await reissueToken(currentRefreshToken);
+      if (typeof reissueResult === 'number') {
+        return reissueResult;
+      } else {
+        const userObject = JSON.parse(userString);
+        userObject.accessToken = reissueResult.accessToken;
+        userObject.refreshToken = reissueResult.refreshToken;
+        localStorage.setItem('user', JSON.stringify(userObject));
 
-      return { accessToken };
+        return {
+          accessToken: reissueResult.accessToken,
+        };
+      }
     }
   }
   return { accessToken: currentAccessToken };
