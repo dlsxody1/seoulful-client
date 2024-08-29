@@ -6,6 +6,8 @@
 
 **접속 링크** : http://seoulful.site/
 
+**현재 https 연결 작업중이여서 현재위치 불러오는 Geolocation API는 사용이 불가합니다!**
+
 <br/>
 
 # 🐻 실행방법
